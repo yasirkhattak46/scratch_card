@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\RestaurantsController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\GrDataController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,7 +17,7 @@ use App\Http\Controllers\GrDataController;
 |
 */
 
-Route::get('/route-cache', function() {
+Route::get('/route-cache', function () {
     Cache::flush();
     Artisan::call('cache:clear');
     Artisan::call('optimize:clear');
@@ -24,20 +25,24 @@ Route::get('/route-cache', function() {
     Route::clearResolvedInstances();
     return 'Routes cache cleared';
 });
-Route::get('login',[App\Http\Controllers\AdminController::class,'login']);
-Route::post('login_action',[App\Http\Controllers\AdminController::class,'login_action'])->name('login_action');
-Route::post('logout',[App\Http\Controllers\AdminController::class,'logout'])->name('logout');
-
+Route::get('login', [App\Http\Controllers\AdminController::class, 'login']);
+Route::post('login_action', [App\Http\Controllers\AdminController::class, 'login_action'])->name('login_action');
+Route::post('logout', [App\Http\Controllers\AdminController::class, 'logout'])->name('logout');
 
 
 //Auth::routes();
 
 Route::group([
     'middleware' => ['EnsureLogin'],
-    'prefix' => 'admin'], function() {
-    Route::get('/',[App\Http\Controllers\HomeController::class,'index']);
+    'prefix' => 'admin'], function () {
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
     Route::get('/profile', [App\Http\Controllers\AdminController::class, 'profile'])->name('profile');
     Route::post('/update_profile', [App\Http\Controllers\AdminController::class, 'update_profile'])->name('update_profile');
+    Route::get('/working_hours', [App\Http\Controllers\RestaurantsController::class, 'working_hours'])->name('working_hours');
+    Route::resources([
+        'restaurants' => RestaurantsController::class,
+    ]);
+
 
 });
 

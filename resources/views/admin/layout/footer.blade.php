@@ -1,7 +1,7 @@
 <!-- Main Content -->
 <footer class="main-footer">
     <div class="footer-left">
-        <a href="templateshub.net">Templateshub</a></a>
+        Design & Developed By <a target="_blank" href="https://www.yasirkhattak.com">Yasir Khattak</a></a>
     </div>
     <div class="footer-right">
     </div>
@@ -20,7 +20,17 @@
 <script src="{{url('public/assets/js/custom.js')}}"></script>
 <script src="{{url('public/assets/js/ajax.js')}}"></script>
 <script src="{{url('public/assets/js/sweetalert.min.js')}}"></script>
-
+<script src="{{url('public/assets/bundles/datatables/datatables.min.js')}}"></script>
+<script src="{{url('public/assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{url('public/assets/bundles/datatables/export-tables/dataTables.buttons.min.js')}}"></script>
+<script src="{{url('public/assets/bundles/datatables/export-tables/buttons.flash.min.js')}}"></script>
+<script src="{{url('public/assets/bundles/datatables/export-tables/jszip.min.js')}}"></script>
+<script src="{{url('public/assets/bundles/datatables/export-tables/pdfmake.min.js')}}"></script>
+<script src="{{url('public/assets/bundles/datatables/export-tables/vfs_fonts.js')}}"></script>
+<script src="{{url('public/assets/bundles/datatables/export-tables/buttons.print.min.js')}}"></script>
+<script src="{{url('public/assets/js/page/datatables.js')}}"></script>
+<script src="{{url('public/assets/bundles/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+<script src="{{url('public/assets/bundles/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>
 
 <script>
     $('#logout').on('click', function (e) {

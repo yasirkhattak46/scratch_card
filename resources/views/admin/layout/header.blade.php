@@ -10,8 +10,13 @@
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{url('public/assets/css/app.min.css')}}">
     <!-- Template CSS -->
+    <link rel="stylesheet" href="{{asset('public/assets/bundles/datatables/datatables.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{url('public/assets/css/style.css')}}">
     <link rel="stylesheet" href="{{url('public/assets/css/components.css')}}">
+    <link rel="stylesheet" href="{{url('public/assets/bundles/pretty-checkbox/pretty-checkbox.min.css')}}">
+    <link rel="stylesheet" href="{{url('public/assets/bundles/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}">
+    <link rel="stylesheet" href="{{url('public/assets/bundles/bootstrap-daterangepicker/daterangepicker.css')}}">
     <!-- Custom style CSS -->
     <link rel="stylesheet" href="{{url('public/assets/css/custom.css')}}">
     <link rel='shortcut icon' type='image/x-icon' href='{{url('public/assets/img/scratch_logo.jpg')}}'/>
@@ -39,7 +44,7 @@
                                                                                                          class="user-img-radious-style">
                         <span class="d-sm-none d-lg-inline-block"></span></a>
                     <div class="dropdown-menu dropdown-menu-right pullDown">
-                        <div class="dropdown-title">Hello Sarah Smith</div>
+                        <div class="dropdown-title">Hello {{Auth::user()->name}}</div>
                         <a href="{{route('profile')}}" class="dropdown-item has-icon"> <i class="far
 										fa-user"></i> Profile
                         </a>

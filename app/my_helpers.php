@@ -1,6 +1,6 @@
 <?php
 /**
- * @Project:     Marcha Marlo
+ * @Project:     Scratch Card
  * @Copyright:   Copyright (c) Danish Sheraz,
  * @Senior-Developer: Danish Sheraz
  **/

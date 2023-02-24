@@ -60,6 +60,7 @@ function call_ajax_with_functions(response_div, php_file, form_data, functions) 
     let request =  new XMLHttpRequest();
     request.open("POST", php_file, true);
     request.send(form_data);
+    console.log(form_data)
     $('body').append(modal);
     $('#background_fade').fadeIn();
     $('.btn').attr('disabled','disabled');
