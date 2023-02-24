@@ -38,9 +38,9 @@
                                                     class="badge badge-{{$restaurant->status == 1 ? 'success' : 'danger'}}">{{$restaurant->status == 1 ? 'active' : 'inactive'}}</span>
                                             </td>
                                             <td>
-                                                <a href="{{route('working_hours',1)}}"><i
+                                                <a href="{{route('working_hours',$restaurant->id)}}"><i
                                                         class="far fa-eye font-15 text-success"></i></a>
-                                                <a href="{{route('working_hours',1)}}"><i
+                                                <a href="{{route('working_hours',$restaurant->id)}}"><i
                                                         class="far fa-clock  font-15"></i></a>
                                                 <a href="{{route('restaurants.edit',$restaurant->id)}}"><i
                                                         class="fas fa-edit  font-15 text-warning"></i></a>

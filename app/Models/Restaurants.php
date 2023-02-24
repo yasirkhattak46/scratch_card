@@ -32,5 +32,4 @@ class Restaurants extends Model
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];
-}
+    protected $dates = ['deleted_at'];}

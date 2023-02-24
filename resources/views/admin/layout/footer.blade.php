@@ -31,6 +31,7 @@
 <script src="{{url('public/assets/js/page/datatables.js')}}"></script>
 <script src="{{url('public/assets/bundles/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
 <script src="{{url('public/assets/bundles/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>
+<script src="{{url('public/assets/bundles/select2/dist/js/select2.full.min.js')}}"></script>
 
 <script>
     $('#logout').on('click', function (e) {

@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{url('public/assets/bundles/pretty-checkbox/pretty-checkbox.min.css')}}">
     <link rel="stylesheet" href="{{url('public/assets/bundles/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}">
     <link rel="stylesheet" href="{{url('public/assets/bundles/bootstrap-daterangepicker/daterangepicker.css')}}">
+    <link rel="stylesheet" href="{{url('public/assets/bundles/select2/dist/css/select2.min.css')}}">
     <!-- Custom style CSS -->
     <link rel="stylesheet" href="{{url('public/assets/css/custom.css')}}">
     <link rel='shortcut icon' type='image/x-icon' href='{{url('public/assets/img/scratch_logo.jpg')}}'/>

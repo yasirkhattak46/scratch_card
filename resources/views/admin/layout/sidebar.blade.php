@@ -13,6 +13,9 @@
             <li class="dropdown">
                 <a href="{{url('/admin/restaurants')}}" class="nav-link"><i data-feather="home"></i><span>Restaurants</span></a>
             </li>
+            <li class="dropdown">
+                <a href="{{url('/admin/quiz_list')}}" class="nav-link"><i data-feather="home"></i><span>Quiz</span></a>
+            </li>
         </ul>
     </aside>
 </div>

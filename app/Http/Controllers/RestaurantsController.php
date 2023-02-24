@@ -43,7 +43,6 @@ class RestaurantsController extends Controller
             'owner_email' => 'required',
             'owner_phone' => 'required',
             'restaurant_name' => 'required',
-//            'restaurant_logo' => 'required',
             'restaurant_address' => 'required',
             'restaurant_house_number' => 'required',
             'restaurant_city' => 'required',
@@ -51,7 +50,6 @@ class RestaurantsController extends Controller
             'google_reviews_link' => 'required',
             'menu_link' => 'required',
             'validation_code' => 'required',
-//            'scratch_img' => 'required',
             'status' => 'required',
         ]);
         if ($validator->passes()) {
