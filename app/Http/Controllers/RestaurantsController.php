@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Restaurants;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use mysql_xdevapi\Exception;
 
@@ -69,12 +70,12 @@ class RestaurantsController extends Controller
                     return response()->json($data);
 
                 }
-//                Check Scratch Card Image
-                if ($request->hasFile('scratch_img')) {
-                    $scratch_img = time() . '.' . $request->scratch_img->extension();
-                    $request->scratch_img->move(public_path('scratch_img'), $scratch_img);
+//                Check Background Image
+                if ($request->hasFile('background_img')) {
+                    $background_img = time() . '.' . $request->background_img->extension();
+                    $request->background_img->move(public_path('background_image'), $background_img);
                 } elseif (isset($restaurant)) {
-                    $scratch_img = $restaurant->scratch_img;
+                    $background_img = $restaurant->background_img;
                 } else {
                     $data['status'] = "Failure";
                     $data['result'] = "Scratch Image Required";
@@ -98,7 +99,7 @@ class RestaurantsController extends Controller
                         'google_reviews_link' => $request->google_reviews_link,
                         'menu_link' => $request->menu_link,
                         'validation_code' => $request->validation_code,
-                        'scratch_img' => $scratch_img,
+                        'background_img' => $background_img,
                         'status' => $request->status,
                     ]);
                 $data['status'] = "Success";
@@ -120,9 +121,9 @@ class RestaurantsController extends Controller
      * @param \App\Models\Restaurants $restaurants
      * @return \Illuminate\Http\Response
      */
-    public function show(Restaurants $restaurants)
+    public function show($id)
     {
-        //
+
     }
 
     /**
@@ -159,12 +160,19 @@ class RestaurantsController extends Controller
     {
 
     }
+
     public function restaurant_delete(Request $request)
     {
         Restaurants::find($request->id)->delete();
         $data['status'] = "Success";
         $data['result'] = "Restaurant Delete Successfully";
         return response()->json($data);
+    }
+
+    public function restaurant_scratch($id)
+    {
+        $data['restaurant'] = Restaurants::where('id', $id)->with('working_hours', 'quiz')->first();
+        return view('home2', $data);
     }
 
 

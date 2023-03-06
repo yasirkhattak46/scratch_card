@@ -90,14 +90,14 @@ function call_ajax_with_functions(response_div, php_file, form_data, functions) 
             } else {
                 document.getElementById(response_div).innerHTML = request.responseText;
             }
-            if(functions.length > 0) {
-                if(request.responseText.toLowerCase().search('fail') !== -1) {
-                } else {
-                    while (functions.length) {
-                        functions.shift().call();
+                if (functions.length > 0) {
+                    if (request.responseText.toLowerCase().search('success') == -1) {
+                    } else {
+                        while (functions.length) {
+                            functions.shift().call();
+                        }
                     }
                 }
-            }
         }
     }
 }

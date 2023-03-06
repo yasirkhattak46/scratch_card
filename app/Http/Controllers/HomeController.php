@@ -32,7 +32,7 @@ class HomeController extends Controller
 
     public function front()
     {
-        return view('home');
+        return view('welcome');
     }
 
 
@@ -100,8 +100,8 @@ class HomeController extends Controller
 
     public function quiz_list()
     {
-        $data['quiz']=Quiz::with('restaurants')->get();
-        return view('quiz.scratch_quiz',$data);
+        $data['quiz'] = Quiz::with('restaurants')->get();
+        return view('quiz.scratch_quiz', $data);
     }
 
     public function create_quiz()
@@ -109,10 +109,11 @@ class HomeController extends Controller
         $data['restaurants'] = Restaurants::get();
         return view('quiz.create_quiz', $data);
     }
+
     public function quiz_edit($id)
     {
         $data['restaurants'] = Restaurants::get();
-        $data['single_quiz']=Quiz::where('id',$id)->first();
+        $data['single_quiz'] = Quiz::where('id', $id)->first();
         return view('quiz.create_quiz', $data);
     }
 
@@ -122,7 +123,8 @@ class HomeController extends Controller
             'restaurant_id' => 'required',
             'title' => 'required',
             'quantity' => 'required',
-            'scratch_pattern' => 'required',
+            "scratch_pattern"    => "required|array|min:1",
+            "scratch_pattern.*"  => "required|string|distinct|min:1",
         ]);
         if ($validator->passes()) {
             try {
@@ -131,7 +133,7 @@ class HomeController extends Controller
                 }
                 if ($request->hasFile('image')) {
                     $quiz_image = time() . '.' . $request->image->extension();
-                    $request->image->move(public_path('quiz_images'),$quiz_image);
+                    $request->image->move(public_path('quiz_images'), $quiz_image);
                 } elseif (isset($quiz)) {
                     $quiz_image = $quiz->image;
                 } else {
@@ -147,7 +149,7 @@ class HomeController extends Controller
                         'restaurant_id' => $request->restaurant_id,
                         'title' => $request->title,
                         'quantity' => $request->quantity,
-                        'scratch_pattern' => json_encode($request->scratch_pattern),
+                        'scratch_pattern' => implode(',',$request->scratch_pattern),
                         'image' => $quiz_image
                     ]
                 );
@@ -157,13 +159,18 @@ class HomeController extends Controller
                 $response['status'] = 'Failure';
                 $response['result'] = $e;
             }
-            return response()->json($response);
+        }else{
+            $response['status'] = 'validator';
+            $response['result'] = $validator->errors()->toJson();
         }
+        return response()->json($response);
     }
-    public function quiz_delete(Request $request){
-        Quiz::where('id',$request->id)->delete();
-        $response['status']='Success';
-        $response['status']='Quiz Deleted Succesfully';
+
+    public function quiz_delete(Request $request)
+    {
+        Quiz::where('id', $request->id)->delete();
+        $response['status'] = 'Success';
+        $response['result'] = 'Quiz Deleted Successfully';
         return response()->json($response);
     }
 }

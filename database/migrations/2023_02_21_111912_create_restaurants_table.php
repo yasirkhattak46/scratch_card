@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('validation_code')->nullable();
             $table->string('scratch_img')->nullable();
             $table->string('background_img')->nullable();
+            $table->string('color')->nullable();
             $table->string('status')->default(0)->comment('0 = inactive, 1 = active');
             $table->softDeletes();
             $table->timestamps();

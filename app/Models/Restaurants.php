@@ -24,6 +24,8 @@ class Restaurants extends Model
         'menu_link',
         'validation_code',
         'scratch_img',
+        'background_img',
+        'color',
         'status',
     ];
 
@@ -32,4 +34,14 @@ class Restaurants extends Model
      *
      * @var array
      */
-    protected $dates = ['deleted_at'];}
+    protected $dates = ['deleted_at'];
+
+    public function working_hours(){
+        return $this->belongsTo(WorkingHour::class,'id','restaurant_id');
+    }
+
+    public function quiz(){
+        return $this->belongsTo(Quiz::class,'id','restaurant_id');
+    }
+
+}

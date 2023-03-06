@@ -6,46 +6,46 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Restaurant Management</h4>
+                            <h4>{{isset($quiz_title) ? $quiz_title->title : 'All Winners' }}</h4>
                         </div>
                         <div class="card-body">
-                            <a href="{{route('restaurants.create')}}" class="float-right btn btn-success">Add
-                                Restaurant</a>
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover" id="tableExport" style="width:100%;">
                                     <thead>
                                     <tr>
                                         <th>LOGO</th>
                                         <th>NAME</th>
-                                        <th>OWNER</th>
-                                        <th>OWNER EMAIL</th>
-                                        <th>CITY</th>
-                                        <th>STATUS</th>
-                                        <th>ACTION</th>
+                                        <th>Email</th>
+                                        <th>Contact</th>
+                                        <th>Address</th>
+                                        <th>Restaurant</th>
+                                        <th>Quiz</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @forelse($restaurants as $restaurant)
+                                    @forelse($winners as $winner)
                                         <tr>
                                             <td><img style="max-width: 100px; width: 80px; max-height: 100px"
-                                                     src="{{asset('public/restaurant_logo/'.$restaurant->restaurant_logo)}}">
+                                                     src="{{asset('public/restaurant_logo/'.$winner->restaurants->restaurant_logo)}}">
                                             </td>
-                                            <td>{{$restaurant->restaurant_name}}</td>
-                                            <td>{{$restaurant->owner_name}}</td>
-                                            <td>{{$restaurant->owner_email}}</td>
-                                            <td>{{$restaurant->restaurant_city}}</td>
-                                            <td><span
-                                                    class="badge badge-{{$restaurant->status == 1 ? 'success' : 'danger'}}">{{$restaurant->status == 1 ? 'active' : 'inactive'}}</span>
-                                            </td>
-                                            <td>
-                                                <a href="{{route('working_hours',$restaurant->id)}}"><i
-                                                        class="far fa-eye font-15 text-success"></i></a>
-                                                <a href="{{route('working_hours',$restaurant->id)}}"><i
-                                                        class="far fa-clock  font-15"></i></a>
-                                                <a href="{{route('restaurants.edit',$restaurant->id)}}"><i
-                                                        class="fas fa-edit  font-15 text-warning"></i></a>
-                                                    <i class="fas fa-trash-alt font-15 text-danger" onclick="delete_file({{$restaurant->id}})"></i>
-                                            </td>
+                                            <td>{{$winner->fname}}</td>
+                                            <td>{{$winner->email}}</td>
+                                            <td>{{$winner->contact}}</td>
+                                            <td>{{$winner->address}}</td>
+                                            <td>{{$winner->restaurants->restaurant_name}}</td>
+                                            <td>{{$winner->quiz->title}}</td>
+{{--                                            <td><span--}}
+{{--                                                    class="badge badge-{{$winner->status == 1 ? 'success' : 'danger'}}">{{$winner->status == 1 ? 'active' : 'inactive'}}</span>--}}
+{{--                                            </td>--}}
+{{--                                            <td>--}}
+{{--                                                <a href="{{route('restaurant_scratch',$winner->id)}}"><i--}}
+{{--                                                        class="far fa-eye font-15 text-success"></i></a>--}}
+{{--                                                <a href="{{route('working_hours',$winner->id)}}"><i--}}
+{{--                                                        class="far fa-clock  font-15"></i></a>--}}
+{{--                                                <a href="{{route('restaurants.edit',$winner->id)}}"><i--}}
+{{--                                                        class="fas fa-edit  font-15 text-warning"></i></a>--}}
+{{--                                                    <i class="fas fa-trash-alt font-15 text-danger" onclick="delete_file({{$winner->id}})"></i>--}}
+{{--                                            </td>--}}
                                         </tr>
                                     @empty
                                     @endforelse
