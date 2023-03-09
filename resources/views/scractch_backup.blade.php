@@ -8,7 +8,6 @@
     @endphp
 @endif
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +26,6 @@
 
     <title>RublyX</title>
 </head>
-
 <body class="position-relative">
 <section class="scratch_card_sec"
          style="background-image :url({{url('public/background_image/'.$restaurant->background_img)}})">
@@ -37,81 +35,66 @@
             <h2>{{$restaurant->restaurant_name}}</h2>
         </div>
 
-        <div class="scratch-cards p-xl-5">
+        <div class="scratch-cards px-xl-5">
             <div class="row pb-xl-5">
-                <div class="col-md-4 mt-3">
+                <div class="col-4 mt-3">
                     <div class="card1" id="card1">
                     </div>
                 </div>
-                <div class="col-md-4 ">
+                <div class="col-4 mt-3">
                     <div class="card1" id="card2">
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-4 mt-3">
                     <div class="card1" id="card3">
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="rate_us_menu d-flex justify-content-around py-5">
-            <button type="button" class="btnrate_us btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#staticBackdrop">
-                Menu
-            </button>
-            <div class="modal fade winner_modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                 tabindex="-1"
-                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Fill this Form</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="winner_form">
-                                @csrf
-                                <input type="hidden" name="restaurant_id" value="{{$restaurant->id}}">
-                                <input type="hidden" name="quiz_id" value="{{$quiz_id}}">
-                                <div class="mb-1">
-                                    <label for="fullname" class="form-label">Full Name</label>
-                                    <input type="text" name="fname" class="form-control" id="fullname" required>
-                                </div>
-                                <div class="mb-1">
-                                    <label for="email" class="form-label">Email address</label>
-                                    <input type="email" name="email" class="form-control" id="email"
-                                           aria-describedby="emailHelp"
-                                           required>
-                                </div>
-                                <div class="mb-1">
-                                    <label for="address" class="form-label">Address</label>
-                                    <input type="text" name="address" class="form-control" id="address" required>
-                                </div>
-                                <div class="mb-1">
-                                    <label for="contact" class="form-label">Contact No</label>
-                                    <input type="number" name="contact" class="form-control" id="contact" required>
-                                </div>
-                                <hr>
-                                <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary btn_modal float-right">Save</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <a href="" class="btnrate_us btn btn-primary">
-                Rate us
-            </a>
-
-        </div>
-
-
     </div>
     <!-- Modal -->
-
+    <div class="modal fade winner_modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+         tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Fill this Form</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="winner_form">
+                        @csrf
+                        <input type="hidden" name="restaurant_id" value="{{$restaurant->id}}">
+                        <input type="hidden" name="quiz_id" value="{{$quiz_id}}">
+                        <div class="mb-1">
+                            <label for="fullname" class="form-label">Full Name</label>
+                            <input type="text" name="fname" class="form-control" id="fullname" required>
+                        </div>
+                        <div class="mb-1">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" name="email" class="form-control" id="email"
+                                   aria-describedby="emailHelp"
+                                   required>
+                        </div>
+                        <div class="mb-1">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" name="address" class="form-control" id="address" required>
+                        </div>
+                        <div class="mb-1">
+                            <label for="contact" class="form-label">Contact No</label>
+                            <input type="number" name="contact" class="form-control" id="contact" required>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary btn_modal float-right">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 </section>
 <div class="wn_win">
 
@@ -131,12 +114,12 @@
 
     $('#card1').wScratchPad({
         cursor: 'pointer',
-        size: 20,          // The size of the brush/scratch.
+        size: 50,          // The size of the brush/scratch.
         bg: '{{$restaurant->color}}',  // Background (image path or hex color).
         fg: '{{url('/public/scratch_img/'.$restaurant->scratch_img)}}', // Foreground (image path or hex color).
         realtime: true,
         scratchMove: function (e, card) {
-            scratch_done(e, card, 1, product_image1);
+            scratch_done(e, card, 1 , product_image1);
         },
         scratchUp: function (e, first_card) {
         },
@@ -144,12 +127,12 @@
     });
     $('#card2').wScratchPad({
         cursor: 'pointer',
-        size: 20,          // The size of the brush/scratch.
+        size: 50,          // The size of the brush/scratch.
         bg: '{{$restaurant->color}}',  // Background (image path or hex color).
         fg: '{{url('/public/scratch_img/'.$restaurant->scratch_img)}}',
         realtime: true,
         scratchMove: function (e, card) {
-            scratch_done(e, card, 2, product_image2);
+            scratch_done(e, card, 2 , product_image2);
         },
         scratchUp: function (e, second_card) {
         },
@@ -157,21 +140,24 @@
     });
     $('#card3').wScratchPad({
         cursor: 'pointer',
-        size: 20,          // The size of the brush/scratch.
+        size: 50,          // The size of the brush/scratch.
         bg: '{{$restaurant->color}}',  // Background (image path or hex color).
         fg: '{{url('/public/scratch_img/'.$restaurant->scratch_img)}}',
         realtime: true,
         scratchMove: function (e, card) {
-            scratch_done(e, card, 3, product_image3);
+            scratch_done(e, card, 3 , product_image3);
         },
         scratchUp: function (e, third_card) {
         },
     });
 
 
+
+
     function scratch_done(e, current_card, card_number, product_image) {
         if (current_card >= 75) {
-            if (total_scratch.indexOf(card_number) === -1) {
+            if(total_scratch.indexOf(card_number) === -1)
+            {
                 total_scratch.push(card_number);
             }
             $('#card' + card_number).wScratchPad('clear');

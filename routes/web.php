@@ -64,5 +64,6 @@ Route::group([
 Route::get('/', [App\Http\Controllers\HomeController::class, 'front'])->name('front');
 Route::get('/restaurant_scratch/{id}', [App\Http\Controllers\RestaurantsController::class, 'restaurant_scratch'])->name('restaurant_scratch');
 Route::post('/winner_details', [App\Http\Controllers\WinnersController::class, 'winner_details'])->name('winner_details');
+Route::view('/hamza', 'home' );
 
 

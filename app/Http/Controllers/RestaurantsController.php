@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Quiz;
 use App\Models\Restaurants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use mysql_xdevapi\Exception;
+use ValueError;
 
 class RestaurantsController extends Controller
 {
@@ -40,17 +42,11 @@ class RestaurantsController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'owner_name' => 'required',
-            'owner_email' => 'required',
-            'owner_phone' => 'required',
             'restaurant_name' => 'required',
             'restaurant_address' => 'required',
             'restaurant_house_number' => 'required',
             'restaurant_city' => 'required',
             'restaurant_postal_code' => 'required',
-            'google_reviews_link' => 'required',
-            'menu_link' => 'required',
-            'validation_code' => 'required',
             'status' => 'required',
         ]);
         if ($validator->passes()) {
@@ -77,9 +73,24 @@ class RestaurantsController extends Controller
                 } elseif (isset($restaurant)) {
                     $background_img = $restaurant->background_img;
                 } else {
+                    $background_img = 'default_background.png';
+                }
+                //                Check Scratch Card Image
+                if ($request->hasFile('scratch_img')) {
+                    $scratch_img = time() . '.' . $request->scratch_img->extension();
+                    $request->scratch_img->move(public_path('scratch_img'), $scratch_img);
+                } elseif (isset($restaurant)) {
+                    $scratch_img = $restaurant->scratch_img;
+                } else {
                     $data['status'] = "Failure";
                     $data['result'] = "Scratch Image Required";
                     return response()->json($data);
+                }
+
+                if (isset($restaurant)) {
+                    $validation_code = $restaurant->validation_code;
+                } else {
+                    $validation_code = rand(1000, 1999);
                 }
                 Restaurants::updateOrCreate(
                     [
@@ -98,8 +109,10 @@ class RestaurantsController extends Controller
                         'restaurant_postal_code' => $request->restaurant_postal_code,
                         'google_reviews_link' => $request->google_reviews_link,
                         'menu_link' => $request->menu_link,
-                        'validation_code' => $request->validation_code,
+                        'validation_code' => $validation_code,
                         'background_img' => $background_img,
+                        'scratch_img' => $scratch_img,
+                        'color' => $request->color,
                         'status' => $request->status,
                     ]);
                 $data['status'] = "Success";
@@ -171,7 +184,36 @@ class RestaurantsController extends Controller
 
     public function restaurant_scratch($id)
     {
-        $data['restaurant'] = Restaurants::where('id', $id)->with('working_hours', 'quiz')->first();
+
+            $data['restaurant'] = Restaurants::where('id', $id)->with('working_hours', 'quiz_pivot')->first();
+            foreach ($data['restaurant']['quiz_pivot'] as $quiz) {
+                $get_quiz = Quiz::where('id', $quiz->quiz_id)->first();
+                if ($get_quiz->available > 0) {
+                    $quizs[] = $get_quiz;
+                }
+            }
+            $win_pattren = [];
+            for ($i = 1; $i <= 3; $i++) {
+                if (count($quizs) < 1) {
+                    $data['result'] = "Sorry try Later or Contact Admin";
+                    return response()->json($data['result']);
+                }
+                $rand = array_rand($quizs, 1);
+                $win_pattren[] = $quizs[$rand];
+                if ($quizs[$rand]->status == 0) {
+                    unset($quizs[$rand]);
+                }
+            }
+            $data['quiz_data'] = $win_pattren;
+
+            if (count(array_count_values(array_column($win_pattren, 'id'))) == 1) {
+                $data['prediction'] = 'win';
+                $data['quiz_id'] = $data['quiz_data'][0]->id;
+            } else {
+                $data['prediction'] = 'lose';
+                $data['quiz_id'] = false;
+            }
+
         return view('home2', $data);
     }
 

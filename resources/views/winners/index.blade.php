@@ -26,26 +26,26 @@
                                     @forelse($winners as $winner)
                                         <tr>
                                             <td><img style="max-width: 100px; width: 80px; max-height: 100px"
-                                                     src="{{asset('public/restaurant_logo/'.$winner->restaurants->restaurant_logo)}}">
+                                                     src="{{asset('public/restaurant_logo/'.(isset($winner->restaurants) ? $winner->restaurants->restaurant_logo : ''))}}">
                                             </td>
                                             <td>{{$winner->fname}}</td>
                                             <td>{{$winner->email}}</td>
                                             <td>{{$winner->contact}}</td>
                                             <td>{{$winner->address}}</td>
-                                            <td>{{$winner->restaurants->restaurant_name}}</td>
-                                            <td>{{$winner->quiz->title}}</td>
-{{--                                            <td><span--}}
-{{--                                                    class="badge badge-{{$winner->status == 1 ? 'success' : 'danger'}}">{{$winner->status == 1 ? 'active' : 'inactive'}}</span>--}}
-{{--                                            </td>--}}
-{{--                                            <td>--}}
-{{--                                                <a href="{{route('restaurant_scratch',$winner->id)}}"><i--}}
-{{--                                                        class="far fa-eye font-15 text-success"></i></a>--}}
-{{--                                                <a href="{{route('working_hours',$winner->id)}}"><i--}}
-{{--                                                        class="far fa-clock  font-15"></i></a>--}}
-{{--                                                <a href="{{route('restaurants.edit',$winner->id)}}"><i--}}
-{{--                                                        class="fas fa-edit  font-15 text-warning"></i></a>--}}
-{{--                                                    <i class="fas fa-trash-alt font-15 text-danger" onclick="delete_file({{$winner->id}})"></i>--}}
-{{--                                            </td>--}}
+                                            <td>{{isset($winner->restaurants) ? $winner->restaurants->restaurant_name : ''}}</td>
+                                            <td>{{isset($winner->quiz)?$winner->quiz->title : ''}}</td>
+                                            {{--                                            <td><span--}}
+                                            {{--                                                    class="badge badge-{{$winner->status == 1 ? 'success' : 'danger'}}">{{$winner->status == 1 ? 'active' : 'inactive'}}</span>--}}
+                                            {{--                                            </td>--}}
+                                            {{--                                            <td>--}}
+                                            {{--                                                <a href="{{route('restaurant_scratch',$winner->id)}}"><i--}}
+                                            {{--                                                        class="far fa-eye font-15 text-success"></i></a>--}}
+                                            {{--                                                <a href="{{route('working_hours',$winner->id)}}"><i--}}
+                                            {{--                                                        class="far fa-clock  font-15"></i></a>--}}
+                                            {{--                                                <a href="{{route('restaurants.edit',$winner->id)}}"><i--}}
+                                            {{--                                                        class="fas fa-edit  font-15 text-warning"></i></a>--}}
+                                            {{--                                                    <i class="fas fa-trash-alt font-15 text-danger" onclick="delete_file({{$winner->id}})"></i>--}}
+                                            {{--                                            </td>--}}
                                         </tr>
                                     @empty
                                     @endforelse

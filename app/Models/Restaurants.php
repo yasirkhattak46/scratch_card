@@ -44,4 +44,8 @@ class Restaurants extends Model
         return $this->belongsTo(Quiz::class,'id','restaurant_id');
     }
 
+    public function quiz_pivot(){
+        return $this->hasMany(RestaurantQuiz::class,'restaurant_id','id');
+    }
+
 }
