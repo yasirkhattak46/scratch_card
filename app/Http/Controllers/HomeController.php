@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Quiz;
 use App\Models\Restaurants;
+use App\Models\Winners;
 use App\Models\WorkingHour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -27,7 +28,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $data['restaurants'] = Restaurants::count();
+        $data['quiz'] = Quiz::count();
+        $data['winner'] = Winners::count();
+        return view('admin.dashboard' , $data);
     }
 
     public function front()

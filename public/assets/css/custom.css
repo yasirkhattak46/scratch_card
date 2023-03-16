@@ -72,9 +72,9 @@ input:checked + .slider:after
 
 .restaurant_preview{
     box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
-    width: 70%;
+    width: 150px;
     height: 115px;
-    border-radius: 10px;
+    border-radius: 50%;
 }
 .image_upload_button{
     padding-top: 10px;
@@ -104,5 +104,10 @@ input:checked + .slider:after
     top: 0;
     opacity: 0;
 }
-
+.card_text{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 /*--------- END --------*/

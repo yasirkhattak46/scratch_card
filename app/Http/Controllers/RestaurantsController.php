@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Quiz;
+use App\Models\RestaurantQuiz;
 use App\Models\Restaurants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -61,9 +62,7 @@ class RestaurantsController extends Controller
                 } elseif (isset($restaurant)) {
                     $restaurant_logo = $restaurant->restaurant_logo;
                 } else {
-                    $data['status'] = "Failure";
-                    $data['result'] = "Restaurant Logo Required";
-                    return response()->json($data);
+                    $restaurant_logo = 'default_logo.png';
 
                 }
 //                Check Background Image
@@ -73,7 +72,7 @@ class RestaurantsController extends Controller
                 } elseif (isset($restaurant)) {
                     $background_img = $restaurant->background_img;
                 } else {
-                    $background_img = 'default_background.png';
+                    $background_img = 'default_bg.jpg';
                 }
                 //                Check Scratch Card Image
                 if ($request->hasFile('scratch_img')) {
@@ -82,9 +81,7 @@ class RestaurantsController extends Controller
                 } elseif (isset($restaurant)) {
                     $scratch_img = $restaurant->scratch_img;
                 } else {
-                    $data['status'] = "Failure";
-                    $data['result'] = "Scratch Image Required";
-                    return response()->json($data);
+                    $scratch_img = 'default_scratch.jpg';
                 }
 
                 if (isset($restaurant)) {
@@ -92,7 +89,7 @@ class RestaurantsController extends Controller
                 } else {
                     $validation_code = rand(1000, 1999);
                 }
-                Restaurants::updateOrCreate(
+                $new_restaurant = Restaurants::updateOrCreate(
                     [
                         'id' => $request->id
                     ],
@@ -115,6 +112,16 @@ class RestaurantsController extends Controller
                         'color' => $request->color,
                         'status' => $request->status,
                     ]);
+                if ($new_restaurant->wasRecentlyCreated) {
+
+                    $quizs = Quiz::where('individual',0)->get();
+                    foreach ($quizs as $quiz) {
+                        RestaurantQuiz::create([
+                            'restaurant_id' => $new_restaurant->id,
+                            'quiz_id' => $quiz->id,
+                        ]);
+                    }
+                }
                 $data['status'] = "Success";
                 $data['result'] = "Restaurant Added";
             } catch (Exception $exception) {
@@ -185,7 +192,8 @@ class RestaurantsController extends Controller
     public function restaurant_scratch($id)
     {
 
-            $data['restaurant'] = Restaurants::where('id', $id)->with('working_hours', 'quiz_pivot')->first();
+        $data['restaurant'] = Restaurants::where('id', base64_decode($id))->with('working_hours', 'quiz_pivot')->first();
+        if ($data['restaurant']) {
             foreach ($data['restaurant']['quiz_pivot'] as $quiz) {
                 $get_quiz = Quiz::where('id', $quiz->quiz_id)->first();
                 if ($get_quiz->available > 0) {
@@ -213,9 +221,23 @@ class RestaurantsController extends Controller
                 $data['prediction'] = 'lose';
                 $data['quiz_id'] = false;
             }
+        }
 
         return view('home2', $data);
     }
 
+    public function validate_restaurant(Request $request)
+    {
+        $restaurant = Restaurants::where(['id' => $request->id , 'validation_code'=>$request->validation_code])->first();
+        if($restaurant){
+         $restaurant->update(['status'=>1]);
+            $data['status'] = "Success";
+            $data['result'] = "Restaurant Activate Successfully";
+        }else{
+            $data['status'] = "Failure";
+            $data['result'] = " Incorrect Validation Code";
+        }
+        return response()->json($data);
+    }
 
 }

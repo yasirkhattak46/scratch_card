@@ -14,12 +14,15 @@
                                     <thead>
                                     <tr>
                                         <th>LOGO</th>
+                                        <th>Quiz</th>
                                         <th>NAME</th>
                                         <th>Email</th>
                                         <th>Contact</th>
-                                        <th>Address</th>
                                         <th>Restaurant</th>
-                                        <th>Quiz</th>
+                                        <th>street</th>
+                                        <th>postal_code</th>
+                                        <th>city</th>
+                                        <th>house_no</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -28,12 +31,16 @@
                                             <td><img style="max-width: 100px; width: 80px; max-height: 100px"
                                                      src="{{asset('public/restaurant_logo/'.(isset($winner->restaurants) ? $winner->restaurants->restaurant_logo : ''))}}">
                                             </td>
+                                            <td>{{isset($winner->quiz)?$winner->quiz->title : ''}}</td>
                                             <td>{{$winner->fname}}</td>
                                             <td>{{$winner->email}}</td>
                                             <td>{{$winner->contact}}</td>
-                                            <td>{{$winner->address}}</td>
                                             <td>{{isset($winner->restaurants) ? $winner->restaurants->restaurant_name : ''}}</td>
-                                            <td>{{isset($winner->quiz)?$winner->quiz->title : ''}}</td>
+                                            <td>{{$winner->street}}</td>
+                                            <td>{{$winner->postal_code}}</td>
+                                            <td>{{$winner->city}}</td>
+                                            <td>{{$winner->house_no}}</td>
+
                                             {{--                                            <td><span--}}
                                             {{--                                                    class="badge badge-{{$winner->status == 1 ? 'success' : 'danger'}}">{{$winner->status == 1 ? 'active' : 'inactive'}}</span>--}}
                                             {{--                                            </td>--}}
